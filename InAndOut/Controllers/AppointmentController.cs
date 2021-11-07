@@ -14,7 +14,7 @@ namespace InAndOut.Controllers
         }
         public IActionResult Details(int id)
         {
-            return Ok($"You have entered id = {id}" + id);
+            return Ok($"You have entered id = {id}");
         }
     }
 }
