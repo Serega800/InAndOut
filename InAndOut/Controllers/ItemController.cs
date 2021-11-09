@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace InAndOut.Controllers
 {
-    public class AppointmentController : Controller
+    public class ItemController : Controller
     {
         public IActionResult Index()
         {
             return View();
-        }
-        public IActionResult Details(int id)
-        {
-            return Ok($"You have entered id = {id}");
         }
     }
 }
