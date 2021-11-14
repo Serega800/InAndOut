@@ -19,7 +19,6 @@ namespace InAndOut.Controllers
         {
             IEnumerable<Expense> objList = _db.Expenses;
             return View(objList);
-            //return View();
         }
         // GET-Create
         public IActionResult Create()
@@ -34,6 +33,63 @@ namespace InAndOut.Controllers
             if (ModelState.IsValid)
             {
                 _db.Expenses.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+        // GET Delete
+        public IActionResult Delete(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var idObject = _db.Expenses.Find(id);
+            if (idObject == null)
+            {
+                return NotFound();
+            }                
+            return View(idObject);
+        }
+
+        // POST Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var idObject = _db.Expenses.Find(id);
+            if (idObject == null)
+            {
+                return NotFound();
+            }               
+            
+            _db.Expenses.Remove(idObject);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        // GET Update
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var idObject = _db.Expenses.Find(id);
+            if (idObject == null)
+            {
+                return NotFound();
+            }
+            return View(idObject);
+        }
+        // POST Update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Expense obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Expenses.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
