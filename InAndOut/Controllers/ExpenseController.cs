@@ -68,5 +68,32 @@ namespace InAndOut.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+        // GET Update
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var idObject = _db.Expenses.Find(id);
+            if (idObject == null)
+            {
+                return NotFound();
+            }
+            return View(idObject);
+        }
+        // POST Update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Expense obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Expenses.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
     }
 }
